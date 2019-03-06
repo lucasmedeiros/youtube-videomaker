@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/LukeHxH/youtube-videomaker/issues"
   },
-  "homepage": "https://github.com/LukeHxH/youtube-videomaker#readme"
+  "homepage": "https://github.com/LukeHxH/youtube-videomaker#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.9"
+  }
 }
