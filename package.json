@@ -1,0 +1,22 @@
+{
+  "name": "youtube-videomaker",
+  "version": "1.0.0",
+  "description": "Automatização de criação de vídeos para o YouTube",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeHxH/youtube-videomaker.git"
+  },
+  "author": "LukeHxH",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LukeHxH/youtube-videomaker/issues"
+  },
+  "homepage": "https://github.com/LukeHxH/youtube-videomaker#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.9"
+  }
+}
