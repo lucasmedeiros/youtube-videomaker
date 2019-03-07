@@ -13,7 +13,7 @@ function start() {
     }
 
     function askAndReturnPrefix() {
-        prefixes = ['O que é', 'Quem é', 'A história de'];
+        prefixes = ['Who is', 'What is', 'The history of'];
         selectedPrefixIndex = readline.keyInSelect(prefixes);
 
         return prefixes[selectedPrefixIndex];
