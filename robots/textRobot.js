@@ -3,9 +3,9 @@ const algorithmia = require('algorithmia');
 // Definir sua API key
 const algorithmiaApiKey = require('../credentials/algorithmia.json').apiKey;
 
-function start(contentObject) {
-    fetchContentFromWikipedia(contentObject);
-    // cleanContent(contentObject);
+async function start(contentObject) {
+    await fetchContentFromWikipedia(contentObject);
+    cleanContent(contentObject);
     // breakContentIntoSentences(contentObject);
 
     async function fetchContentFromWikipedia(contentObject) {
@@ -14,8 +14,27 @@ function start(contentObject) {
             .algo('web/WikipediaParser/0.1.2?timeout=300');
         const wikipediaResponse = await wikipediaAlgorithm.pipe(contentObject.searchTerm);
         const wikipediaContent = wikipediaResponse.get();
+        
+        contentObject.sourceContentOriginal = wikipediaContent.content;
+    }
 
-        console.log(wikipediaContent);
+    function cleanContent(contentObject) {
+        const withoutBlanksAndMarkdowns = 
+            removeBlanksAndMarkdowns(contentObject.sourceContentOriginal);
+        
+        contentObject.cleanContent = withoutBlanksAndMarkdowns;
+        
+        function removeBlanksAndMarkdowns(text) {
+            const allLines = text.split('\n');
+
+            const withoutBlanksAndMarkdowns = allLines.filter((line) => {
+                return (line.trim().length === 0 || !line.trim().startsWith('='));
+            });
+
+            return withoutBlanksAndMarkdowns.join(' ');
+        }
+
+
     }
 }
 
