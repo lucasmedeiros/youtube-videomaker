@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/LukeHxH/youtube-videomaker#readme",
   "dependencies": {
+    "algorithmia": "^0.3.10",
     "readline-sync": "^1.4.9"
   }
 }
