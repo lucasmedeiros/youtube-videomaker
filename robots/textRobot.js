@@ -12,7 +12,10 @@ async function start(contentObject) {
         const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
         const wikipediaAlgorithm = algorithmiaAuthenticated
             .algo('web/WikipediaParser/0.1.2?timeout=300');
-        const wikipediaResponse = await wikipediaAlgorithm.pipe(contentObject.searchTerm);
+        const wikipediaResponse = await wikipediaAlgorithm.pipe({
+            "articleName": contentObject.searchTerm,
+            "lang": "pt"
+        });
         const wikipediaContent = wikipediaResponse.get();
         
         contentObject.sourceContentOriginal = wikipediaContent.content;
