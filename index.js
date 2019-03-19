@@ -4,7 +4,9 @@ const robots = {
 };
 
 async function start() {
-    const contentObject = {};
+    const contentObject = {
+        maximumSentences: 7
+    };
 
     contentObject.searchTerm = askAndReturnSearchTerm();
     contentObject.prefix = askAndReturnPrefix();
@@ -12,19 +14,19 @@ async function start() {
     await robots.text(contentObject);
 
     function askAndReturnSearchTerm() {
-        question = readline.question("Type a Wikipedia search term: ");
+        question = readline.question("Digite o nome de um artigo da Wikipedia: ");
 
         return question;
     }
 
     function askAndReturnPrefix() {
-        prefixes = ['Who is', 'What is', 'The history of'];
+        prefixes = ['Quem é', 'O que é', 'A história de'];
         selectedPrefixIndex = readline.keyInSelect(prefixes);
 
         return prefixes[selectedPrefixIndex];
     }
 
-    console.log(contentObject);
+    console.log(JSON.stringify(contentObject, null, 4));
 }
 
 start();

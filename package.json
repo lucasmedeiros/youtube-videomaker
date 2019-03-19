@@ -18,6 +18,8 @@
   "homepage": "https://github.com/LukeHxH/youtube-videomaker#readme",
   "dependencies": {
     "algorithmia": "^0.3.10",
-    "readline-sync": "^1.4.9"
+    "readline-sync": "^1.4.9",
+    "sbd": "^1.0.15",
+    "watson-developer-cloud": "^3.18.2"
   }
 }
