@@ -4,7 +4,9 @@ const robots = {
 };
 
 async function start() {
-    const contentObject = {};
+    const contentObject = {
+        maximumSentences: 7
+    };
 
     contentObject.searchTerm = askAndReturnSearchTerm();
     contentObject.prefix = askAndReturnPrefix();
@@ -24,7 +26,7 @@ async function start() {
         return prefixes[selectedPrefixIndex];
     }
 
-    console.log(contentObject);
+    console.log(JSON.stringify(contentObject, null, 4));
 }
 
 start();

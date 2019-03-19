@@ -17,6 +17,8 @@ async function start(contentObject) {
     await fetchContentFromWikipedia(contentObject);
     cleanContent(contentObject);
     breakContentIntoSentences(contentObject);
+    limitContentIntoMaximumSentences(contentObject);
+    await fetchAllSentencesKeywords(contentObject);
 
     async function fetchContentFromWikipedia(contentObject) {
         const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
@@ -63,6 +65,17 @@ async function start(contentObject) {
                 images: []
             });
         });
+    }
+
+    function limitContentIntoMaximumSentences(contentObject) {
+        contentObject.sentences = 
+            contentObject.sentences.slice(0, contentObject.maximumSentences);
+    }
+
+    async function fetchAllSentencesKeywords(contentObject) {
+        for (const sentence of contentObject.sentences) {
+            sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text);
+        }
     }
 
     async function fetchWatsonAndReturnKeywords(sentence) {
