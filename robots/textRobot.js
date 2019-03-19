@@ -1,4 +1,5 @@
 const algorithmia = require('algorithmia');
+const sentenceBoundaryDetection = require('sbd');
 
 // Definir sua API key
 const algorithmiaApiKey = require('../credentials/algorithmia.json').apiKey;
@@ -15,7 +16,7 @@ let nlu = new NaturalLanguageUnderstandingV1({
 async function start(contentObject) {
     await fetchContentFromWikipedia(contentObject);
     cleanContent(contentObject);
-    // breakContentIntoSentences(contentObject);
+    breakContentIntoSentences(contentObject);
 
     async function fetchContentFromWikipedia(contentObject) {
         const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
@@ -47,6 +48,21 @@ async function start(contentObject) {
 
             return withoutBlanksAndMarkdowns.join(' ');
         }
+    }
+
+    function breakContentIntoSentences(contentObject) {
+        contentObject.sentences = []
+
+        const sentences = sentenceBoundaryDetection
+            .sentences(contentObject.cleanContent);
+        
+        sentences.forEach((sentence) => {
+            contentObject.sentences.push({
+                text: sentence,
+                keywords: [],
+                images: []
+            });
+        });
     }
 
     async function fetchWatsonAndReturnKeywords(sentence) {
