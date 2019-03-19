@@ -12,13 +12,13 @@ async function start() {
     await robots.text(contentObject);
 
     function askAndReturnSearchTerm() {
-        question = readline.question("Type a Wikipedia search term: ");
+        question = readline.question("Digite o nome de um artigo da Wikipedia: ");
 
         return question;
     }
 
     function askAndReturnPrefix() {
-        prefixes = ['Who is', 'What is', 'The history of'];
+        prefixes = ['Quem é', 'O que é', 'A história de'];
         selectedPrefixIndex = readline.keyInSelect(prefixes);
 
         return prefixes[selectedPrefixIndex];
