@@ -95,6 +95,7 @@ const start = async () => {
 
   const contentObject = stateRobot.load();
 
+  console.log("> Obtendo resultados textuais...");
   await fetchContentFromWikipedia(contentObject);
   cleanContent(contentObject);
   breakContentIntoSentences(contentObject);

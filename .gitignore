@@ -60,6 +60,9 @@ typings/
 # next.js build output
 .next
 
+# Folders
 credentials
+resources
 
+# Search content
 content.json
