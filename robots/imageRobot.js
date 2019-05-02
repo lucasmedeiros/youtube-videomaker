@@ -2,7 +2,7 @@ const google = require('googleapis').google;
 const customSearch = google.customsearch('v1');
 
 const stateRobot = require('./stateRobot');
-const googleSearchCredentials = require('../credentials/google-search.json');
+const { googleSearchCredentials } = require('../credentials');
 
 start = async () => {
   findImagesOnGoogle = async (query) => {
@@ -11,6 +11,7 @@ start = async () => {
       cx: googleSearchCredentials.searchEngineID,
       q: query,
       searchType: 'image',
+      imgSize: 'huge',
       num: 2
     });
 

@@ -2,8 +2,10 @@ const algorithmia = require('algorithmia');
 const sentenceBoundaryDetection = require('sbd');
 
 // Definir sua API key
-const algorithmiaApiKey = require('../credentials/algorithmia.json').apiKey;
-const watsonApiKey = require('../credentials/watson-nlu.json').apikey;
+const { algorithmiaCredentials, watsonCredentials } = require('../credentials');
+
+const algorithmiaApiKey = algorithmiaCredentials.apiKey;
+const watsonApiKey = watsonCredentials.apikey;
 
 const NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
@@ -15,18 +17,8 @@ const nlu = new NaturalLanguageUnderstandingV1({
 
 const stateRobot = require('./stateRobot');
 
-async function start() {
-  const contentObject = stateRobot.load();
-
-  await fetchContentFromWikipedia(contentObject);
-  cleanContent(contentObject);
-  breakContentIntoSentences(contentObject);
-  limitContentIntoMaximumSentences(contentObject);
-  await fetchAllSentencesKeywords(contentObject);
-
-  stateRobot.save(contentObject);
-
-  async function fetchContentFromWikipedia(contentObject) {
+const start = async () => {
+  const fetchContentFromWikipedia = async (contentObject) => {
     const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
     
     const wikipediaAlgorithm = algorithmiaAuthenticated.algo('web/WikipediaParser/0.1.2?timeout=300');
@@ -41,11 +33,8 @@ async function start() {
     contentObject.sourceContentOriginal = wikipediaContent.content;
   }
 
-  function cleanContent(contentObject) {
-    const withoutBlanksAndMarkdowns = removeBlanksAndMarkdowns(contentObject.sourceContentOriginal);
-    contentObject.cleanContent = withoutBlanksAndMarkdowns;
-    
-    function removeBlanksAndMarkdowns(text) {
+  const cleanContent = (contentObject) => {
+    const removeBlanksAndMarkdowns = (text) => {
       const allLines = text.split('\n');
 
       const withoutBlanksAndMarkdowns = allLines.filter((line) => {
@@ -54,9 +43,12 @@ async function start() {
 
       return withoutBlanksAndMarkdowns.join(' ');
     }
+
+    const withoutBlanksAndMarkdowns = removeBlanksAndMarkdowns(contentObject.sourceContentOriginal);
+    contentObject.cleanContent = withoutBlanksAndMarkdowns;
   }
 
-  function breakContentIntoSentences(contentObject) {
+  const breakContentIntoSentences = (contentObject) => {
     contentObject.sentences = []
 
     const sentences = sentenceBoundaryDetection.sentences(contentObject.cleanContent);
@@ -70,17 +62,17 @@ async function start() {
     });
   }
 
-  function limitContentIntoMaximumSentences(contentObject) {
+  const limitContentIntoMaximumSentences = (contentObject) => {
       contentObject.sentences = contentObject.sentences.slice(0, contentObject.maximumSentences);
   }
 
-  async function fetchAllSentencesKeywords(contentObject) {
+  const fetchAllSentencesKeywords = async (contentObject) => {
       for (const sentence of contentObject.sentences) {
         sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text);
       }
   }
 
-  async function fetchWatsonAndReturnKeywords(sentence) {
+  const fetchWatsonAndReturnKeywords = async (sentence) => {
       return new Promise((resolve, reject) => {
         nlu.analyze({
           text: sentence,
@@ -100,6 +92,16 @@ async function start() {
         });
       });
   }
+
+  const contentObject = stateRobot.load();
+
+  await fetchContentFromWikipedia(contentObject);
+  cleanContent(contentObject);
+  breakContentIntoSentences(contentObject);
+  limitContentIntoMaximumSentences(contentObject);
+  await fetchAllSentencesKeywords(contentObject);
+
+  stateRobot.save(contentObject);
 }
 
 module.exports = start;

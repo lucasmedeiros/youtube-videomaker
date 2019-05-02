@@ -7,7 +7,11 @@ const robots = {
 
 async function start() {
   robots.input();
+
+  console.log("Obtendo resultados textuais...");
   await robots.text();
+
+  console.log("Obtendo imagens...");
   await robots.image();
 
   const content = robots.state.load();
