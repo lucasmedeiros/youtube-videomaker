@@ -6,11 +6,13 @@ const robots = {
 };
 
 async function start() {
-  robots.input();
+  // robots.input();
 
-  await robots.text();
+  // await robots.text();
 
   await robots.image();
+
+  console.log("Done!");
 
   // const content = robots.state.load();
   // console.dir(content, { depth: null });

@@ -1,11 +1,14 @@
 const imageDownloader = require('image-downloader');
 const google = require('googleapis').google;
 const fs = require('fs');
+const gm = require('gm').subClass({imageMagick: true});
 
 const customSearch = google.customsearch('v1');
 
 const stateRobot = require('./stateRobot');
 const { googleSearchCredentials } = require('../credentials');
+
+const resourcesDirectoryPath = './resources';
 
 const start = async () => {
   const findImagesOnGoogle = async (query) => {
@@ -34,9 +37,9 @@ const start = async () => {
     }
   }
 
-  const downloadImage = async (imageUrl, resourcesDirectory, fileName) => {
+  const downloadImage = async (imageUrl, fileName) => {
     return await imageDownloader.image({
-      url: imageUrl, url: imageUrl, dest: `${resourcesDirectory}/${fileName}`,
+      url: imageUrl, url: imageUrl, dest: `${resourcesDirectoryPath}/${fileName}`,
     });
   }
 
@@ -45,9 +48,9 @@ const start = async () => {
       throw new Error("Imagem já foi baixada, tentando próxima...");
   };
 
-  const createDirectory = (dirPath) => {
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath);
+  const createDirectory = () => {
+    if (!fs.existsSync(resourcesDirectoryPath)) {
+      fs.mkdirSync(resourcesDirectoryPath);
     }
   }
 
@@ -60,17 +63,64 @@ const start = async () => {
         const imageUrl = images[j];
 
         try {
-          const resourcesDirectoryPath = './resources';
           checkImageExists(imageUrl, contentObject);
-          createDirectory(resourcesDirectoryPath);
-          await downloadImage(imageUrl, resourcesDirectoryPath, `${i}-original.png`);
+          createDirectory();
+
+          await downloadImage(imageUrl, `${i}-original.png`);
+
           console.log(`> Baixou imagem com sucesso: ${imageUrl}`);
           contentObject.downloadedImages.push(imageUrl);
+
           break;
         } catch(error) {
           console.log(`> Erro ao baixar ${imageUrl}: ${error}`);
         }
       }
+    }
+  }
+
+  const convertImage = async (sentenceIndex) => {
+    return new Promise((resolve, reject) => {
+      const inputFile = `${resourcesDirectoryPath}/${sentenceIndex}-original.png`;
+      console.log(inputFile);
+      const outputFile = `${resourcesDirectoryPath}/${sentenceIndex}-converted.png`;
+      const width = 1920;
+      const height = 1080;
+
+      gm()
+        .in(inputFile)
+        .out('(')
+          .out('-clone')
+          .out('0')
+          .out('-background', 'white')
+          .out('-blur', '0x9')
+          .out('-resize', `${width}x${height}^`)
+        .out(')')
+        .out('(')
+          .out('-clone')
+          .out('0')
+          .out('-background', 'white')
+          .out('-resize', `${width}x${height}`)
+        .out(')')
+        .out('-delete', '0')
+        .out('-gravity', 'center')
+        .out('-compose', 'over')
+        .out('-composite')
+        .out('-extent', `${width}x${height}`)
+        .write(outputFile, (error) => {
+          if (error) {
+            return reject(error);
+          }
+
+          console.log(`> Image converted: ${outputFile}`);
+          resolve();
+        })
+    });
+  }
+
+  const convertAllImages = async (contentObject) => {
+    for (let i = 0; i < contentObject.sentences.length; i++) {
+      await convertImage(i);
     }
   }
 
@@ -80,6 +130,8 @@ const start = async () => {
   await findImagesFromAllSentences(contentObject);
   console.log("> Baixando imagens...");
   await downloadAllImages(contentObject);
+  console.log("> Convertendo imagens...");
+  await convertAllImages(contentObject);
 
   stateRobot.save(contentObject);
 }
