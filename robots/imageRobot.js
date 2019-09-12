@@ -26,7 +26,7 @@ const start = async () => {
     });
 
     return imagesUrl;
-  }
+  };
 
   const findImagesFromAllSentences = async (contentObject) => {
     for (sentence of contentObject.sentences) {
@@ -35,24 +35,24 @@ const start = async () => {
 
       sentence.googleSearchQuery = query;
     }
-  }
+  };
 
   const downloadImage = async (imageUrl, fileName) => {
     return await imageDownloader.image({
       url: imageUrl, url: imageUrl, dest: `${resourcesDirectoryPath}/${fileName}`,
     });
-  }
+  };
 
   const checkImageExists = (url, contentObject) => {
     if (contentObject.downloadedImages.includes(url))
-      throw new Error("Imagem já foi baixada, tentando próxima...");
+      throw new Error("> [download de imagens] Imagem já foi baixada, tentando próxima...");
   };
 
   const createDirectory = () => {
     if (!fs.existsSync(resourcesDirectoryPath)) {
       fs.mkdirSync(resourcesDirectoryPath);
     }
-  }
+  };
 
   const downloadAllImages = async (contentObject) => {
     contentObject.downloadedImages = [];
@@ -68,21 +68,20 @@ const start = async () => {
 
           await downloadImage(imageUrl, `${i}-original.png`);
 
-          console.log(`> Baixou imagem com sucesso: ${imageUrl}`);
+          console.log(`> [download de imagens] Baixou imagem com sucesso: ${imageUrl}`);
           contentObject.downloadedImages.push(imageUrl);
 
           break;
         } catch(error) {
-          console.log(`> Erro ao baixar ${imageUrl}: ${error}`);
+          console.log(`> [download de imagens] Erro ao baixar ${imageUrl}: ${error}`);
         }
       }
     }
-  }
+  };
 
   const convertImage = async (sentenceIndex) => {
     return new Promise((resolve, reject) => {
       const inputFile = `${resourcesDirectoryPath}/${sentenceIndex}-original.png`;
-      console.log(inputFile);
       const outputFile = `${resourcesDirectoryPath}/${sentenceIndex}-converted.png`;
       const width = 1920;
       const height = 1080;
@@ -112,17 +111,90 @@ const start = async () => {
             return reject(error);
           }
 
-          console.log(`> Image converted: ${outputFile}`);
+          console.log(`> [conversão de imagens] Imagem convertida: ${outputFile}`);
           resolve();
         })
     });
-  }
+  };
 
   const convertAllImages = async (contentObject) => {
     for (let i = 0; i < contentObject.sentences.length; i++) {
       await convertImage(i);
     }
-  }
+  };
+
+  const createSentenceImage = async (sentenceIndex, sentenceText) => {
+    return new Promise((resolve, reject) => {
+      const outputFile = `${resourcesDirectoryPath}/${sentenceIndex}-sentence.png`;
+
+      const templateSettings = {
+        0: {
+          size: '1920x400',
+          gravity: 'center'
+        },
+        1: {
+          size: '1920x1080',
+          gravity: 'center'
+        },
+        2: {
+          size: '800x1080',
+          gravity: 'west'
+        },
+        3: {
+          size: '1920x400',
+          gravity: 'center'
+        },
+        4: {
+          size: '1920x1080',
+          gravity: 'center'
+        },
+        5: {
+          size: '800x1080',
+          gravity: 'west'
+        },
+        6: {
+          size: '1920x400',
+          gravity: 'center'
+        },
+      };
+
+      gm()
+        .out('-size', templateSettings[sentenceIndex].size)
+        .out('-gravity', templateSettings[sentenceIndex].gravity)
+        .out('-background', 'transparent')
+        .out('-fill', 'white')
+        .out('-font', 'Fira-Code-Bold')
+        .out('-kerning', '-1')
+        .out(`caption:${sentenceText}`)
+        .write(outputFile, (error) => {
+          if (error) {
+            return reject(error)
+          }
+
+          console.log(`> [criação de sentenças] Sentença criada: ${outputFile}`)
+          resolve()
+        })
+    });
+  };
+
+  const createAllSentences = async (contentObject) => {
+    for (let i = 0; i < contentObject.sentences.length; i++) {
+      await createSentenceImage(i, contentObject.sentences[i].text);
+    }
+  };
+
+  const createYouTubeThumbnail = async () => {
+    return new Promise((resolve, reject) => {
+      gm()
+        .in(`${resourcesDirectoryPath}/0-converted.png`)
+        .write(`${resourcesDirectoryPath}/youtube-thumbnail.jpg`, error => {
+          if (error)
+            return reject(error)
+          
+          console.log('> [criação de thumbnail] Thumbnail criada!');
+        })
+    });
+  };
 
   const contentObject = stateRobot.load();
 
@@ -132,6 +204,10 @@ const start = async () => {
   await downloadAllImages(contentObject);
   console.log("> Convertendo imagens...");
   await convertAllImages(contentObject);
+  console.log("> Criando sentenças...");
+  await createAllSentences(contentObject);
+  console.log("> Criando thumbnail para o vídeo...");
+  await createYouTubeThumbnail();
 
   stateRobot.save(contentObject);
 }
