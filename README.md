@@ -30,7 +30,7 @@ const credentials = {
 module.exports = credentials;
 ```
 
-Você deve copiar o código acima e inserir em `credentials/index.html` e preencher os campos necessários.
+Você deve copiar o código acima e inserir em `credentials/index.js` e preencher os campos necessários.
 
 ### ImageMagick
 
