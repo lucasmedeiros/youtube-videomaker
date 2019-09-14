@@ -42,10 +42,10 @@ Ou então, você pode simplesmente instalar o **[Homebrew](https://brew.sh/)** e
 brew install imagemagick
 ```
 
-Tendo feito isso, tudo estará pronto para iniciar e espera-se que funcione normalmente. Para rodar, você deve ter o `node` instalado, e executar o comando:
+Tendo feito isso, tudo estará pronto para iniciar e espera-se que funcione normalmente. Para rodar, você deve ter o [node](https://nodejs.org/en/) e o [yarn](https://yarnpkg.com/lang/en/) instalados, e executar o comando:
 
 ```
-node index.js
+yarn start
 ```
 
 Então, ao final da execução, você deve ter seu vídeo gerado no canal de sua escolha!
