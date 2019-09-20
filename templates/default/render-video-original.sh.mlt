@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<mlt title="Anonymous Submission" version="6.6.0" root="/home/lukehxh" producer="main bin" LC_NUMERIC="pt_BR.UTF-8">
+<mlt title="Anonymous Submission" version="6.6.0" root="ROOT-PATH" producer="main bin" LC_NUMERIC="pt_BR.UTF-8">
  <profile width="1920" frame_rate_den="1" height="1080" display_aspect_num="16" display_aspect_den="9" frame_rate_num="25" colorspace="709" sample_aspect_den="1" description="HD 1080p 25 fps" progressive="1" sample_aspect_num="1"/>
  <producer id="1" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/0-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -21,7 +21,7 @@
  <producer id="2" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/0-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -38,7 +38,7 @@
  <producer id="3" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/1-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -55,7 +55,7 @@
  <producer id="4" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/1-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -72,7 +72,7 @@
  <producer id="5" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/2-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -89,7 +89,7 @@
  <producer id="6" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/2-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -106,7 +106,7 @@
  <producer id="7" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/3-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -123,7 +123,7 @@
  <producer id="8" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/3-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -140,7 +140,7 @@
  <producer id="9" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/4-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -157,7 +157,7 @@
  <producer id="10" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/4-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -174,7 +174,7 @@
  <producer id="11" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/5-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -191,7 +191,7 @@
  <producer id="12" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/5-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -208,7 +208,7 @@
  <producer id="13" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/6-converted.png</property>
+  <property name="resource">CONVERTED-IMAGE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -225,7 +225,7 @@
  <producer id="14" out="250" in="0">
   <property name="length">251</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/resources/6-sentence.png</property>
+  <property name="resource">SENTENCE</property>
   <property name="ttl">25</property>
   <property name="aspect_ratio">1</property>
   <property name="progressive">1</property>
@@ -242,7 +242,7 @@
  <producer id="15" title="Anonymous Submission" out="3850" in="0">
   <property name="length">3851</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/templates/default/track-1.mp3</property>
+  <property name="resource">AUDIO</property>
   <property name="meta.media.nb_streams">1</property>
   <property name="meta.media.0.stream.type">audio</property>
   <property name="meta.media.0.codec.sample_fmt">s16p</property>
@@ -326,7 +326,7 @@
  <producer id="15_playlist2" title="Anonymous Submission" out="3850" in="0">
   <property name="length">3851</property>
   <property name="eof">pause</property>
-  <property name="resource">Git/youtube-videomaker/templates/default/track-1.mp3</property>
+  <property name="resource">AUDIO</property>
   <property name="audio_index">0</property>
   <property name="video_index">-1</property>
   <property name="mute_on_pause">1</property>

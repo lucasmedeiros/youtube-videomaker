@@ -66,6 +66,7 @@ resources
 *.mp4
 *.mp4.txt
 *.kdenlive
+render-video.sh.mlt
 
 # Search content
 content.json
