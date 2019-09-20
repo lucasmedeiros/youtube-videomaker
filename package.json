@@ -4,8 +4,7 @@
   "description": "Automatização de criação de vídeos para o YouTube",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +23,7 @@
     "image-downloader": "^3.4.2",
     "readline-sync": "^1.4.9",
     "sbd": "^1.0.15",
-    "watson-developer-cloud": "^3.18.2"
+    "watson-developer-cloud": "^3.18.2",
+    "xml2js": "^0.4.22"
   }
 }

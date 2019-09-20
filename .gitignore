@@ -60,9 +60,12 @@ typings/
 # next.js build output
 .next
 
-# Folders created at the project
+# Folders and files created at the project
 credentials/index.js
 resources
+*.mp4
+*.mp4.txt
+*.kdenlive
 
 # Search content
 content.json

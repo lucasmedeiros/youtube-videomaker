@@ -2,12 +2,10 @@ const imageDownloader = require('image-downloader');
 const google = require('googleapis').google;
 const fs = require('fs');
 const gm = require('gm').subClass({imageMagick: true});
-
-const customSearch = google.customsearch('v1');
-
 const stateRobot = require('./stateRobot');
 const { googleSearchCredentials } = require('../credentials');
 
+const customSearch = google.customsearch('v1');
 const resourcesDirectoryPath = './resources';
 
 const start = async () => {
@@ -127,40 +125,40 @@ const start = async () => {
     return new Promise((resolve, reject) => {
       const outputFile = `${resourcesDirectoryPath}/${sentenceIndex}-sentence.png`;
 
-      const templateSettings = {
-        0: {
-          size: '1920x400',
-          gravity: 'center'
-        },
-        1: {
-          size: '1920x1080',
-          gravity: 'center'
-        },
-        2: {
-          size: '800x1080',
-          gravity: 'west'
-        },
-        3: {
-          size: '1920x400',
-          gravity: 'center'
-        },
-        4: {
-          size: '1920x1080',
-          gravity: 'center'
-        },
-        5: {
-          size: '800x1080',
-          gravity: 'west'
-        },
-        6: {
-          size: '1920x400',
-          gravity: 'center'
-        },
-      };
+      // const templateSettings = {
+      //   0: {
+      //     size: '1920x400',
+      //     gravity: 'center'
+      //   },
+      //   1: {
+      //     size: '1920x1080',
+      //     gravity: 'center'
+      //   },
+      //   2: {
+      //     size: '800x1080',
+      //     gravity: 'west'
+      //   },
+      //   3: {
+      //     size: '1920x400',
+      //     gravity: 'center'
+      //   },
+      //   4: {
+      //     size: '1920x1080',
+      //     gravity: 'center'
+      //   },
+      //   5: {
+      //     size: '800x1080',
+      //     gravity: 'west'
+      //   },
+      //   6: {
+      //     size: '1920x400',
+      //     gravity: 'center'
+      //   },
+      // };
 
       gm()
-        .out('-size', templateSettings[sentenceIndex].size)
-        .out('-gravity', templateSettings[sentenceIndex].gravity)
+        .out('-size', '1920x400')
+        .out('-gravity', 'center')
         .out('-background', 'transparent')
         .out('-fill', 'white')
         .out('-font', 'Fira-Code-Bold')
@@ -168,11 +166,11 @@ const start = async () => {
         .out(`caption:${sentenceText}`)
         .write(outputFile, (error) => {
           if (error) {
-            return reject(error)
+            return reject(error);
           }
 
-          console.log(`> [criação de sentenças] Sentença criada: ${outputFile}`)
-          resolve()
+          console.log(`> [criação de sentenças] Sentença criada: ${outputFile}`);
+          resolve();
         })
     });
   };
@@ -192,6 +190,7 @@ const start = async () => {
             return reject(error)
           
           console.log('> [criação de thumbnail] Thumbnail criada!');
+          resolve();
         })
     });
   };
