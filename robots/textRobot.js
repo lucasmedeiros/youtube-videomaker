@@ -1,5 +1,6 @@
 const algorithmia = require('algorithmia');
 const sentenceBoundaryDetection = require('sbd');
+const stateRobot = require('./stateRobot');
 
 // Definir sua API key
 const { algorithmiaCredentials, watsonCredentials } = require('../credentials');
@@ -14,8 +15,6 @@ const nlu = new NaturalLanguageUnderstandingV1({
   version: '2018-04-05',
   url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
-
-const stateRobot = require('./stateRobot');
 
 const start = async () => {
   const fetchContentFromWikipedia = async (contentObject) => {

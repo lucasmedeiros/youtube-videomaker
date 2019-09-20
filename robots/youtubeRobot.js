@@ -13,7 +13,7 @@ const start = async (dirName) => {
 
   const authenticateWithOauth = async () => {
     const startWebServer = async () => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _reject) => {
         const port = 5000;
         const app = express();
         const server = app.listen(port, () => {
@@ -46,7 +46,7 @@ const start = async (dirName) => {
     }
 
     const waitForGoogleCallback = async (webServer) => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _reject) => {
         console.log('> [autenticação com o Google] Esperando pela sua autorização...');
         
         webServer.app.get('/oauth2callback', (req, res) => {
@@ -97,7 +97,8 @@ const start = async (dirName) => {
 
   const uploadVideoToYoutube = async (contentObject) => {
     console.log('> [upload de vídeo] Iniciando o upload...');
-    const videoFilePath = `${dirName}/templates/default/rendered-video.mp4`;
+    const fileName = `${contentObject.prefix} ${contentObject.searchTerm}`.split(" ").join("_");
+    const videoFilePath = `${dirName}/templates/default/${fileName}.mp4`;
     const videoFileSize = fs.statSync(videoFilePath).size;
     const videoTitle = `${contentObject.prefix} ${contentObject.searchTerm}`;
     const videoTags = [contentObject.searchTerm, ...contentObject.sentences[0].keywords];
@@ -149,7 +150,7 @@ const start = async (dirName) => {
       }
     }
 
-    const youtubeResponse = await youtube.thumbnails.set(requestParameters);
+    await youtube.thumbnails.set(requestParameters);
     console.log(`> [upload de vídeo] Upload de thumbnail concluído!`);
   }
 

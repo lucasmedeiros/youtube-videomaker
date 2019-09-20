@@ -27,17 +27,22 @@ const start = async () => {
   };
 
   const findImagesFromAllSentences = async (contentObject) => {
-    for (sentence of contentObject.sentences) {
-      const query = `${contentObject.searchTerm} ${sentence.keywords[0]}`;
-      sentence.images = await findImagesOnGoogle(query);
+    for (let i = 0; i < contentObject.sentences.length; i++) {
+      let query;
 
-      sentence.googleSearchQuery = query;
+      if (i === 0)
+        query = contentObject.searchTerm;
+      else
+        query = `${contentObject.searchTerm} ${contentObject.sentences[i].keywords[0]}`;
+
+      contentObject.sentences[i].images = await findImagesOnGoogle(query);
+      contentObject.sentences[i].googleSearchQuery = query;
     }
   };
 
   const downloadImage = async (imageUrl, fileName) => {
     return await imageDownloader.image({
-      url: imageUrl, url: imageUrl, dest: `${resourcesDirectoryPath}/${fileName}`,
+      url: imageUrl, dest: `${resourcesDirectoryPath}/${fileName}`,
     });
   };
 

@@ -39,18 +39,12 @@ async function start() {
     });
   }
 
-  await checkEnvironment().catch(err => {
-    stopExecution(err);
-  });
-  robots.input();
-  await robots.text();
-  await robots.image();
-  await robots.video(__dirname).catch(err => {
-    stopExecution(err);
-  });
-  await robots.youtube(__dirname).catch(err => {
-    stopExecution(err);
-  });
+  // await checkEnvironment().catch(stopExecution);
+  // robots.input();
+  // await robots.text().catch(stopExecution);
+  // await robots.image().catch(stopExecution);
+  // await robots.video(__dirname).catch(stopExecution);
+  await robots.youtube(__dirname).catch(stopExecution);
 
   console.log("Feito!");
 }

@@ -2,6 +2,7 @@ const os = require('os');
 const fs = require('fs');
 const exec = require('child_process').exec;
 const xml2js = require('xml2js');
+const stateRobot = require('./stateRobot');
 
 const HOME_DIR = os.homedir();
 const TEMPLATES_DIR = 'templates';
@@ -95,10 +96,10 @@ const start = async (dirName) => {
     });
   }
 
-  const renderVideoWithKdenlive = async () => {
+  const renderVideoWithKdenlive = async (contentObject) => {
     return new Promise((resolve, reject) => {
       console.log("> [renderização] Vídeo sendo renderizado...");
-      exec(`./${SCRIPT_PATH}`, (error, _stdout, _stderr) => {
+      exec(`./${SCRIPT_PATH} '${contentObject.prefix} ${contentObject.searchTerm}'`, (error, _stdout, _stderr) => {
         if (error) reject(error);
 
         console.log('> [renderização] Vídeo renderizado com sucesso: ');
@@ -107,12 +108,12 @@ const start = async (dirName) => {
     });
   }
 
-  console.log(dirName);
+  const contentObject = stateRobot.load();
   console.log('> [renderização] Preparando arquivo XML do Kdenlive.');
   await prepareKdenliveXML().catch(err => {
     throw new Error(err);
   });
-  await renderVideoWithKdenlive();
+  await renderVideoWithKdenlive(contentObject);
 }
 
 module.exports = start;
