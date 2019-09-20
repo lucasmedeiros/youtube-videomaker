@@ -4,7 +4,8 @@ const robots = {
   input: require('./robots/inputRobot'),
   text: require('./robots/textRobot'),
   image: require('./robots/imageRobot'),
-  video: require('./robots/videoRobot')
+  video: require('./robots/videoRobot'),
+  youtube: require('./robots/youtubeRobot'),
 };
 
 async function start() {
@@ -45,6 +46,9 @@ async function start() {
   await robots.text();
   await robots.image();
   await robots.video(__dirname).catch(err => {
+    stopExecution(err);
+  });
+  await robots.youtube(__dirname).catch(err => {
     stopExecution(err);
   });
 

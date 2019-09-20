@@ -86,10 +86,7 @@ const start = async (dirName) => {
         audioProducers.forEach((element) => {
           element.property[2]._ = `${dirName}/${DEFAULT_TEMPLATE_DIR}/track-1.mp3`;
         });
-
-        // kdenliveXMLOriginalContent.mlt.producer.forEach((producer, index) => {
-        //   console.log(index, producer.property[2]._);
-        // });
+        
         await createKdenliveXMLFile(kdenliveXMLOriginalContent);
         resolve(kdenliveXMLOriginalContent);
       });

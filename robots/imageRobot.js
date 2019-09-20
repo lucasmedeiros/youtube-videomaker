@@ -3,7 +3,7 @@ const google = require('googleapis').google;
 const fs = require('fs');
 const gm = require('gm').subClass({imageMagick: true});
 const stateRobot = require('./stateRobot');
-const { googleSearchCredentials } = require('../credentials');
+const { googleCredentials } = require('../credentials');
 
 const customSearch = google.customsearch('v1');
 const resourcesDirectoryPath = './resources';
@@ -11,8 +11,8 @@ const resourcesDirectoryPath = './resources';
 const start = async () => {
   const findImagesOnGoogle = async (query) => {
     const response = await customSearch.cse.list({
-      auth: googleSearchCredentials.apiKey,
-      cx: googleSearchCredentials.searchEngineID,
+      auth: googleCredentials.apiKey,
+      cx: googleCredentials.searchEngineID,
       q: query,
       searchType: 'image',
       imgSize: 'huge',

@@ -7,7 +7,7 @@ Antes de mais nada, você deve definir algumas credenciais.
 
 ### Credentials
 
-Dentro da pasta `/credentials`, crie um arquivo chamado `index.js` para suas credenciais do [Algorithmia](https://algorithmia.com/), do [IBM Watson - Natural Language Understanding](https://www.ibm.com/watson/services/natural-language-understanding/) e da sua [Search Engine customizada do Google Images](https://developers.google.com/custom-search/docs/tutorial/introduction). Este arquivo `credentials/index.js` está ocultado pelo `.gitignore` e não será enviado para o repositório remoto ao ser commitado.
+Dentro da pasta `/credentials`, crie um arquivo chamado `index.js` para suas credenciais do [Algorithmia](https://algorithmia.com/), do [IBM Watson - Natural Language Understanding](https://www.ibm.com/watson/services/natural-language-understanding/), da sua [Search Engine customizada do Google Images](https://developers.google.com/custom-search/docs/tutorial/introduction) e da sua [Aplicação OAuth do YouTube](https://developers.google.com/youtube/v3). Este arquivo `credentials/index.js` está ocultado pelo `.gitignore` e não será enviado para o repositório remoto ao ser commitado.
 
 O arquivo deverá seguir o seguinte modelo:
 
@@ -21,9 +21,16 @@ const credentials = {
     apikey: 'API KEY DO NATURAL LANGUAGE UNDERSTANDING DO WATSON', // Colocar aqui sua API Key do NLU.
   },
 
-  googleSearchCredentials: {
+  googleCredentials: {
     apiKey: 'API KEY DO GOOGLE', // Colocar aqui sua API Key do Google.
     searchEngineID: 'O ID DA SUA SEARCH ENGINE', // Colocar aqui o ID da sua Search Engine personalizada.
+    oauthClientID: "ID DA SUA APLICAÇÃO OAUTH", // Colocar aqui o ID da sua aplicação OAuth do YouTube.
+    oauthSecretKey: "CHAVE SECRETA DA APLICAÇÃO OAUTH", // Colocar aqui a chave secreta da sua aplicação OAuth do YouTube.
+    callbackUris: ["http://localhost:5000/oauth2callback"], // Link de callback do Oauth (não é necessário alterar, só se quiser um link próprio);
+    originUris: ["http://localhost:5000"], // Link de origem do Oauth (não é necessário alterar, só se quiser um link próprio);
+    authUri: "https://accounts.google.com/o/oauth2/auth",
+    tokenUri: "https://oauth2.googleapis.com/token",
+    authProvider: "https://www.googleapis.com/oauth2/v1/certs", // authUri, tokenUri e authProvider não é preciso alterar.
   }
 }
 
